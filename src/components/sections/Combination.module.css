@@ -1,0 +1,80 @@
+.combination {
+  position: relative;
+  background: var(--color-void);
+}
+
+.stage {
+  position: relative;
+  height: 100vh;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.card {
+  position: absolute;
+  width: clamp(72px, 9vw, 128px);
+  opacity: 0;
+  visibility: hidden;
+  will-change: transform, opacity;
+}
+
+.card img {
+  width: 100%;
+  border-radius: var(--radius-sm);
+  box-shadow: var(--shadow-floating);
+  border: 1px solid rgba(218, 165, 32, 0.25);
+}
+
+/* The dial ring the covers seat into */
+.ring {
+  position: absolute;
+  width: min(58vh, 76vw);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  border: 1px solid rgba(218, 165, 32, 0.35);
+  box-shadow:
+    0 0 40px rgba(218, 165, 32, 0.15),
+    inset 0 0 40px rgba(218, 165, 32, 0.08);
+  opacity: 0;
+  visibility: hidden;
+}
+
+.coreGlow {
+  position: absolute;
+  width: 22vh;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    rgba(232, 213, 160, 0.5),
+    rgba(218, 165, 32, 0.18) 55%,
+    transparent 75%
+  );
+  filter: blur(6px);
+  opacity: 0;
+  visibility: hidden;
+}
+
+.flash {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    circle at 50% 50%,
+    rgba(232, 213, 160, 0.9),
+    rgba(218, 165, 32, 0.4) 40%,
+    transparent 75%
+  );
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.coda {
+  position: absolute;
+  bottom: 18vh;
+  opacity: 0;
+  visibility: hidden;
+  letter-spacing: 4px;
+}

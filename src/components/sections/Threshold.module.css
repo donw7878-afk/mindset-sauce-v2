@@ -1,0 +1,182 @@
+.threshold {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  overflow: hidden;
+  padding-top: calc(var(--nav-height) + 6vh);
+  padding-bottom: var(--space-8);
+  background: var(--color-void);
+}
+
+.doorScene {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.perspective {
+  perspective: 1200px;
+}
+
+.door {
+  position: relative;
+  width: min(80vh, 80vw);
+  will-change: transform;
+}
+
+.door img {
+  width: 100%;
+  height: auto;
+  filter: brightness(0.55) contrast(1.05);
+}
+
+/* Gold light escaping the seams — spec §14 */
+.seamLight {
+  position: absolute;
+  inset: -6%;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle at 50% 50%,
+    transparent 42%,
+    rgba(218, 165, 32, 0.14) 55%,
+    transparent 68%
+  );
+  opacity: 0.2;
+  pointer-events: none;
+}
+
+.vignette {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(
+      to top,
+      rgba(8, 8, 8, 0.94) 0%,
+      rgba(8, 8, 8, 0.72) 26%,
+      rgba(8, 8, 8, 0.3) 46%,
+      transparent 62%
+    ),
+    linear-gradient(
+      to bottom,
+      rgba(8, 8, 8, 0.85) 0%,
+      rgba(8, 8, 8, 0.4) 18%,
+      transparent 34%
+    ),
+    radial-gradient(
+      ellipse at 50% 45%,
+      transparent 30%,
+      rgba(8, 8, 8, 0.75) 78%,
+      var(--color-void) 100%
+    );
+  pointer-events: none;
+}
+
+/* Logo lockup — anchored to the top third of the frame */
+.logoBlock {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.logo {
+  width: min(600px, 88vw);
+  height: auto;
+  filter: drop-shadow(0 0 40px rgba(218, 165, 32, 0.15));
+}
+
+.copy {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  padding: 0 var(--space-5);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-5);
+  margin-top: auto;
+}
+
+.copy h1 {
+  margin-bottom: var(--space-2);
+  text-shadow: 0 2px 24px rgba(8, 8, 8, 0.9);
+}
+
+.em {
+  font-style: italic;
+  color: var(--text-gold);
+}
+
+.sub {
+  max-width: var(--body-max);
+  color: var(--text-primary);
+  font-size: 16px;
+}
+
+.subEm {
+  font-family: var(--font-display), serif;
+  font-style: italic;
+  font-size: 19px;
+  color: var(--text-gold);
+}
+
+.scrollCue {
+  position: relative;
+  z-index: 2;
+  margin-top: var(--space-7);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-3);
+  font-family: var(--font-body), sans-serif;
+  font-size: 12px;
+  font-weight: 300;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.cueLine {
+  width: 1px;
+  height: 48px;
+  background: linear-gradient(to bottom, var(--gold-shadow), transparent);
+  animation: cueDrop 2.4s var(--ease-smooth) infinite;
+}
+
+@keyframes cueDrop {
+  0% {
+    transform: scaleY(0);
+    transform-origin: top;
+  }
+  50% {
+    transform: scaleY(1);
+    transform-origin: top;
+  }
+  51% {
+    transform-origin: bottom;
+  }
+  100% {
+    transform: scaleY(0);
+    transform-origin: bottom;
+  }
+}
+
+@media (max-width: 639px) {
+  .threshold {
+    padding-top: calc(var(--nav-height) + 4vh);
+    padding-bottom: var(--space-6);
+  }
+  .door {
+    width: 92vw;
+  }
+  .logo {
+    width: min(400px, 88vw);
+  }
+}

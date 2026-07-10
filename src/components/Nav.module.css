@@ -1,0 +1,139 @@
+.nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: var(--nav-height);
+  z-index: 1000;
+  background: rgba(18, 18, 18, 0.7);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(218, 165, 32, 0.1);
+  transition: background 0.4s ease;
+}
+
+.scrolled {
+  background: rgba(18, 18, 18, 0.9);
+}
+
+.inner {
+  height: 100%;
+  padding: 0 var(--space-7);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-5);
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  white-space: nowrap;
+}
+
+.logoImg {
+  height: 56px;
+  width: auto;
+  filter: drop-shadow(0 0 12px rgba(218, 165, 32, 0.15));
+}
+
+.institute {
+  font-family: var(--font-display), serif;
+  font-weight: 600;
+  font-size: 18px;
+  letter-spacing: 1px;
+  color: var(--text-gold);
+}
+
+.links {
+  display: flex;
+  gap: var(--space-6);
+}
+
+.link {
+  font-family: var(--font-body), sans-serif;
+  font-size: 13px;
+  font-weight: 400;
+  color: var(--text-muted);
+  transition: color 0.3s ease;
+}
+
+.link:hover {
+  color: var(--text-gold);
+}
+
+/* The chapter currently on stage */
+.active {
+  color: var(--gold-primary);
+}
+
+.active::after {
+  content: "";
+  display: block;
+  height: 1px;
+  margin-top: 3px;
+  background: var(--gold-rich);
+  animation: markDraw 0.5s var(--ease-heavy);
+}
+
+@keyframes markDraw {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
+.right {
+  display: flex;
+  align-items: center;
+  gap: var(--space-5);
+}
+
+.sound {
+  font-family: var(--font-body), sans-serif;
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  padding: var(--space-2) 0;
+  transition: color 0.3s ease;
+}
+
+.sound:hover,
+.sound[aria-pressed="true"] {
+  color: var(--text-gold);
+}
+
+.cta {
+  padding: 10px 24px !important;
+  white-space: nowrap;
+}
+
+@media (max-width: 1023px) {
+  .links {
+    display: none;
+  }
+  .inner {
+    padding: 0 var(--space-5);
+  }
+}
+
+@media (max-width: 639px) {
+  .logoImg {
+    height: 44px;
+  }
+  .institute {
+    display: none;
+  }
+  .cta {
+    padding: 8px 16px !important;
+    font-size: 12px !important;
+  }
+  .sound {
+    display: none;
+  }
+}

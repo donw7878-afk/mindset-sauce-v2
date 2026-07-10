@@ -1,0 +1,246 @@
+.chambers {
+  background: var(--color-void);
+  padding: var(--space-11) 0;
+}
+
+.head {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-5);
+  margin-bottom: var(--space-10);
+}
+
+.lede {
+  max-width: var(--body-max);
+  color: var(--text-primary);
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-11);
+}
+
+.chamber {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-9);
+  align-items: center;
+}
+
+.flipped .artWrap {
+  order: 2;
+}
+.flipped .info {
+  order: 1;
+}
+
+.artWrap {
+  perspective: 1200px;
+  display: flex;
+  justify-content: center;
+}
+
+.art {
+  position: relative;
+  width: min(380px, 100%);
+  will-change: transform;
+}
+
+.art img {
+  width: 100%;
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-floating);
+}
+
+/* Dynamic ground shadow beneath the floating product */
+.artShadow {
+  position: absolute;
+  left: 10%;
+  right: 10%;
+  bottom: -28px;
+  height: 24px;
+  background: radial-gradient(ellipse at center, rgba(0, 0, 0, 0.5), transparent 70%);
+  filter: blur(6px);
+}
+
+.info {
+  max-width: 480px;
+}
+
+.numeral {
+  font-family: var(--font-mono), monospace;
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 4px;
+  color: var(--gold-shadow);
+  margin-bottom: var(--space-4);
+}
+
+.info h3 {
+  font-size: clamp(26px, 2.8vw, 34px);
+  margin-bottom: var(--space-3);
+}
+
+.subtitle {
+  font-family: var(--font-body), sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--text-gold);
+  margin-bottom: var(--space-5);
+}
+
+.line {
+  font-family: var(--font-display), serif;
+  font-style: italic;
+  font-size: 19px;
+  line-height: 1.5;
+  color: var(--text-primary);
+  margin-bottom: var(--space-6);
+}
+
+.chapters {
+  list-style: none;
+  border-top: 1px solid var(--color-steel);
+}
+
+.chapterItem {
+  position: relative;
+  font-family: var(--font-body), sans-serif;
+  font-size: 13px;
+  font-weight: 300;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  padding: var(--space-3) 0;
+  border-bottom: 1px solid var(--color-steel);
+  transition: color 0.3s ease;
+  outline: none;
+}
+
+.chapterLabel {
+  display: block;
+  transition: padding-left 0.4s var(--ease-heavy);
+}
+
+.chapterItem:hover,
+.chapterItem:focus-visible {
+  color: var(--text-gold);
+}
+
+.chapterItem:hover .chapterLabel,
+.chapterItem:focus-visible .chapterLabel {
+  padding-left: var(--space-3);
+}
+
+/* ---- The museum plaque ----
+   Matte black glass beside the hovered chapter. Never a modal;
+   never blocks the page. */
+.plaquePanel {
+  position: absolute;
+  left: calc(100% + var(--space-5));
+  top: 50%;
+  width: 300px;
+  transform: translateY(-50%) translateX(8px);
+  background: rgba(18, 18, 18, 0.82);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(218, 165, 32, 0.28);
+  border-radius: var(--radius-md);
+  padding: var(--space-5);
+  box-shadow: var(--shadow-floating), var(--shadow-gold);
+  opacity: 0;
+  visibility: hidden;
+  transition:
+    opacity 0.45s var(--ease-heavy),
+    transform 0.45s var(--ease-heavy),
+    visibility 0s linear 0.45s;
+  pointer-events: none;
+  z-index: 20;
+  text-transform: none;
+  letter-spacing: normal;
+}
+
+.chapterItem:hover .plaquePanel,
+.chapterItem:focus-visible .plaquePanel {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(-50%) translateX(0);
+  transition:
+    opacity 0.45s var(--ease-heavy),
+    transform 0.45s var(--ease-heavy),
+    visibility 0s;
+}
+
+/* Flipped chambers read the plaque on the other side */
+.flipped .plaquePanel {
+  left: auto;
+  right: calc(100% + var(--space-5));
+  transform: translateY(-50%) translateX(-8px);
+}
+
+.flipped .chapterItem:hover .plaquePanel,
+.flipped .chapterItem:focus-visible .plaquePanel {
+  transform: translateY(-50%) translateX(0);
+}
+
+.plaqueAccent {
+  display: block;
+  width: 32px;
+  height: 1px;
+  background: var(--gold-gradient);
+  margin-bottom: var(--space-4);
+}
+
+.plaqueTitle {
+  font-family: var(--font-display), serif;
+  font-size: 19px;
+  font-weight: 600;
+  line-height: 1.25;
+  color: var(--text-heading);
+  margin-bottom: var(--space-3);
+}
+
+.plaqueDesc {
+  font-family: var(--font-body), sans-serif;
+  font-size: 13px;
+  font-weight: 300;
+  line-height: 1.65;
+  color: var(--text-primary);
+  margin-bottom: var(--space-4);
+}
+
+.plaqueMeta {
+  font-family: var(--font-mono), monospace;
+  font-size: 11px;
+  letter-spacing: 1px;
+  color: var(--text-gold);
+}
+
+/* Touch devices read the chapters without plaques */
+@media (hover: none), (max-width: 1023px) {
+  .plaquePanel {
+    display: none;
+  }
+}
+
+@media (max-width: 1023px) {
+  .chamber {
+    grid-template-columns: 1fr;
+    gap: var(--space-7);
+  }
+  .flipped .artWrap,
+  .flipped .info {
+    order: initial;
+  }
+  .info {
+    max-width: 100%;
+  }
+  .list {
+    gap: var(--space-10);
+  }
+}

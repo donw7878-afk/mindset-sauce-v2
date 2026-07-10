@@ -1,0 +1,138 @@
+.ceremony {
+  position: relative;
+  min-height: 100vh;
+  background: var(--color-void);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  padding: var(--space-5);
+}
+
+.flood {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  visibility: hidden;
+  background: radial-gradient(
+    circle at 50% 50%,
+    rgba(232, 213, 160, 0.5),
+    rgba(218, 165, 32, 0.22) 35%,
+    transparent 70%
+  );
+  pointer-events: none;
+  will-change: transform, opacity;
+}
+
+.gate {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-6);
+  text-align: center;
+}
+
+.gateLine {
+  font-family: var(--font-display), serif;
+  font-weight: 500;
+  font-size: clamp(28px, 4vw, 44px);
+  color: var(--text-heading);
+}
+
+.gateFine {
+  font-size: 12px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.stage {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-7);
+  text-align: center;
+}
+
+.access {
+  font-family: var(--font-mono), monospace;
+  font-size: clamp(18px, 2.4vw, 28px);
+  font-weight: 500;
+  letter-spacing: 8px;
+  text-transform: uppercase;
+  color: var(--gold-primary);
+  text-shadow: 0 0 40px rgba(218, 165, 32, 0.25);
+  opacity: 0;
+  visibility: hidden;
+}
+
+.welcome {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-5);
+}
+
+.welcome > * {
+  opacity: 0;
+  visibility: hidden;
+}
+
+.gold {
+  color: var(--text-gold);
+}
+
+.sub {
+  max-width: 480px;
+  color: var(--text-primary);
+  font-size: 15px;
+}
+
+.manual {
+  opacity: 0;
+  visibility: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-3);
+  background: var(--color-onyx);
+  border: 1px solid var(--gold-rich);
+  border-radius: var(--radius-md);
+  padding: var(--space-6) var(--space-8);
+  box-shadow: var(--shadow-floating), var(--shadow-gold);
+  transition: all 0.5s var(--ease-heavy);
+}
+
+.manual:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-floating), var(--shadow-gold-strong);
+}
+
+.manualBadge {
+  font-family: var(--font-body), sans-serif;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--color-void);
+  background: var(--gold-primary);
+  border-radius: var(--radius-full);
+  padding: 4px 14px;
+}
+
+.manualTitle {
+  font-family: var(--font-display), serif;
+  font-weight: 600;
+  font-size: 26px;
+  color: var(--text-heading);
+}
+
+.manualCopy {
+  font-size: 13px;
+  color: var(--text-muted);
+  max-width: 320px;
+}

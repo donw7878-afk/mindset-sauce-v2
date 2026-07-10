@@ -1,0 +1,28 @@
+.flash {
+  /* Flow inline so the word sits flush against the question mark */
+  white-space: nowrap;
+}
+
+.word {
+  font-family: var(--font-display), serif;
+  font-style: italic;
+  font-weight: 600;
+  color: var(--gold-primary);
+  text-shadow: 0 0 24px rgba(218, 165, 32, 0.25);
+  animation: flashIn 0.22s var(--ease-heavy);
+}
+
+@keyframes flashIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .word {
+    animation: none;
+  }
+}

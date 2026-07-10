@@ -1,0 +1,88 @@
+.institution {
+  background: var(--color-void);
+  padding: var(--space-11) 0;
+}
+
+.head {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-5);
+  margin-bottom: var(--space-9);
+}
+
+.head h2 {
+  margin-bottom: var(--space-2);
+}
+
+.litany {
+  max-width: 760px;
+  margin: 0 auto;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.litanyLine {
+  font-family: var(--font-body), sans-serif;
+  font-weight: 300;
+  font-size: 16px;
+  line-height: 1.7;
+  color: var(--text-muted);
+}
+
+/* The five parallel proof-statements */
+.statement {
+  font-size: 18px;
+  line-height: 1.7;
+  color: var(--text-primary);
+}
+
+/* The interactive question — three fixed lines so the flashing subject
+   sits alone and never reflows the sentence around it */
+.question {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: clamp(19px, 2.6vw, 28px);
+  line-height: 1.4;
+  color: var(--text-heading);
+  margin-top: var(--space-6);
+}
+
+.qLine {
+  display: block;
+}
+
+/* The flashing subject, alone on its own line */
+.qFlash {
+  display: block;
+  font-size: 1.15em;
+}
+
+.answer {
+  color: var(--text-primary);
+}
+
+/* Papa's line */
+.quote {
+  font-family: var(--font-display), serif;
+  font-style: italic;
+  font-size: 18px;
+  color: var(--text-muted);
+  margin-top: var(--space-4);
+}
+
+/* The turn — gold italic close */
+.closing {
+  font-family: var(--font-display), serif;
+  font-style: italic;
+  font-size: clamp(20px, 2.4vw, 24px);
+  line-height: 1.4;
+  color: var(--text-gold);
+  max-width: 620px;
+  margin: var(--space-6) auto 0;
+}

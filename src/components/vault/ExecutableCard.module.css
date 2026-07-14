@@ -1,0 +1,79 @@
+.card {
+  background: var(--color-onyx);
+  border: 1px solid var(--color-steel);
+  border-radius: var(--radius-lg);
+  padding: var(--space-5);
+  transition: border-color var(--duration-base) var(--ease-heavy);
+}
+
+.done {
+  border-color: rgba(74, 158, 110, 0.4);
+}
+
+.label {
+  font-family: var(--font-body), sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: var(--space-3);
+}
+
+.copy {
+  font-size: 14px;
+  font-weight: 300;
+  line-height: 1.7;
+  color: var(--text-primary);
+  margin-bottom: var(--space-4);
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  flex-wrap: wrap;
+}
+
+.open {
+  font-size: 13px;
+  color: var(--gold-primary);
+  transition: color var(--duration-fast) var(--ease-subtle);
+}
+
+.open:hover {
+  color: var(--gold-glow);
+}
+
+.markBtn {
+  font-family: var(--font-body), sans-serif;
+  font-size: 12px;
+  font-weight: 400;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--gold-primary);
+  border: 1px solid var(--gold-rich);
+  border-radius: var(--radius-sm);
+  padding: 8px 18px;
+  transition: all var(--duration-base) var(--ease-heavy);
+}
+
+.markBtn:hover {
+  background: rgba(218, 165, 32, 0.08);
+  border-color: var(--gold-primary);
+  transform: translateY(-1px);
+}
+
+.markBtn:disabled {
+  opacity: 0.5;
+  transform: none;
+}
+
+.sealed {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: 13px;
+  color: var(--color-success);
+}

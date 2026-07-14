@@ -1,0 +1,121 @@
+/* Authenticated glass nav — spec §8. */
+
+.nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  height: var(--nav-height);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-5);
+  padding: 0 var(--space-7);
+  background: rgba(18, 18, 18, 0.7);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(218, 165, 32, 0.1);
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.logoMark {
+  width: 36px;
+  height: 36px;
+  object-fit: contain;
+}
+
+.logoText {
+  font-family: var(--font-display), serif;
+  font-size: 17px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  color: var(--text-heading);
+}
+
+.links {
+  display: flex;
+  align-items: center;
+  gap: var(--space-6);
+}
+
+.link {
+  font-family: var(--font-body), sans-serif;
+  font-size: 13px;
+  font-weight: 400;
+  color: var(--text-muted);
+  transition: color var(--duration-fast) var(--ease-subtle);
+}
+
+.link:hover {
+  color: var(--text-gold);
+}
+
+.active {
+  color: var(--gold-primary);
+}
+
+.identity {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+}
+
+.score {
+  font-family: var(--font-mono), monospace;
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--gold-primary);
+}
+
+.avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: var(--radius-full);
+  border: 1px solid var(--gold-rich);
+  color: var(--gold-glow);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-display), serif;
+  font-size: 15px;
+}
+
+.signOut {
+  font-family: var(--font-body), sans-serif;
+  font-size: 12px;
+  font-weight: 300;
+  letter-spacing: 0.5px;
+  color: var(--text-muted);
+  transition: color var(--duration-fast) var(--ease-subtle);
+}
+
+.signOut:hover {
+  color: var(--text-gold);
+}
+
+@media (max-width: 1023px) {
+  .nav {
+    padding: 0 var(--space-5);
+  }
+  .links {
+    gap: var(--space-4);
+  }
+}
+
+@media (max-width: 639px) {
+  .logoText,
+  .signOut {
+    display: none;
+  }
+  .link {
+    font-size: 12px;
+  }
+  .links {
+    gap: var(--space-3);
+  }
+}

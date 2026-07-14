@@ -3,9 +3,10 @@
   min-height: 100vh;
   background: var(--color-void);
   display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
+  flex-direction: column;
+  /* Children use margin:auto so centering degrades to scrolling —
+     overflow:hidden here once clipped the manual card + CTA. */
+  overflow-x: hidden;
   padding: var(--space-5);
 }
 
@@ -25,11 +26,14 @@
 }
 
 .gate {
-  position: relative;
-  z-index: 2;
+  /* Overlay: after fading it must not hold flex space next to the stage. */
+  position: absolute;
+  inset: 0;
+  z-index: 3;
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   gap: var(--space-6);
   text-align: center;
 }
@@ -54,8 +58,11 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: var(--space-7);
+  gap: var(--space-6);
   text-align: center;
+  /* Centers when short, scrolls when taller than the viewport. */
+  margin: auto;
+  padding: var(--space-6) 0;
 }
 
 .access {
@@ -102,7 +109,7 @@
   background: var(--color-onyx);
   border: 1px solid var(--gold-rich);
   border-radius: var(--radius-md);
-  padding: var(--space-6) var(--space-8);
+  padding: var(--space-5) var(--space-7);
   box-shadow: var(--shadow-floating), var(--shadow-gold);
   transition: all 0.5s var(--ease-heavy);
 }
@@ -135,4 +142,27 @@
   font-size: 13px;
   color: var(--text-muted);
   max-width: 320px;
+}
+
+.builderLine {
+  margin-top: var(--space-4);
+  font-family: var(--font-mono), monospace;
+  font-size: 13px;
+  letter-spacing: 2px;
+  color: var(--text-gold);
+}
+
+.dashboardCta {
+  margin-top: var(--space-2);
+  visibility: hidden;
+}
+
+.inboxNote {
+  margin-top: var(--space-5);
+  max-width: 440px;
+  font-size: 13px;
+  font-weight: 300;
+  line-height: 1.7;
+  color: var(--text-muted);
+  visibility: hidden;
 }

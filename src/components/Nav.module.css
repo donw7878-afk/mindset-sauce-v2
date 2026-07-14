@@ -108,6 +108,20 @@
   color: var(--text-gold);
 }
 
+/* The Door, for returning Builders — always reachable, even on phones */
+.login {
+  font-family: var(--font-body), sans-serif;
+  font-size: 13px;
+  font-weight: 400;
+  color: var(--text-muted);
+  white-space: nowrap;
+  transition: color 0.3s ease;
+}
+
+.login:hover {
+  color: var(--text-gold);
+}
+
 .cta {
   padding: 10px 24px !important;
   white-space: nowrap;
@@ -135,5 +149,8 @@
   }
   .sound {
     display: none;
+  }
+  .login {
+    font-size: 12px;
   }
 }

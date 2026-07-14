@@ -51,6 +51,10 @@
 
 .art img {
   width: 100%;
+  /* Reserve the cover's box before the lazy image arrives — late loads
+     were shifting every ScrollTrigger pin below by ~a viewport. */
+  aspect-ratio: 2 / 3;
+  object-fit: cover;
   border-radius: var(--radius-md);
   box-shadow: var(--shadow-floating);
 }
@@ -221,10 +225,58 @@
   color: var(--text-gold);
 }
 
-/* Touch devices read the chapters without plaques */
+/* ---- Touch: the plaque unfolds beneath the tapped chapter ---- */
+
+.plaqueInline {
+  display: none;
+}
+
 @media (hover: none), (max-width: 1023px) {
   .plaquePanel {
     display: none;
+  }
+
+  .chapterItem {
+    cursor: pointer;
+  }
+
+  .chapterOpen {
+    color: var(--text-gold);
+  }
+
+  .chapterOpen .chapterLabel {
+    padding-left: var(--space-3);
+  }
+
+  .plaqueInline {
+    display: grid;
+    grid-template-rows: 0fr;
+    opacity: 0;
+    transition:
+      grid-template-rows 0.5s var(--ease-heavy),
+      opacity 0.5s var(--ease-heavy);
+    text-transform: none;
+    letter-spacing: normal;
+  }
+
+  .chapterOpen .plaqueInline {
+    grid-template-rows: 1fr;
+    opacity: 1;
+  }
+
+  .plaqueInlineClip {
+    overflow: hidden;
+    min-height: 0;
+  }
+
+  .plaqueInlineBody {
+    margin: var(--space-4) 0 var(--space-2);
+    padding: var(--space-4) var(--space-4) var(--space-4) var(--space-5);
+    background: rgba(18, 18, 18, 0.82);
+    border: 1px solid rgba(218, 165, 32, 0.28);
+    border-left: 2px solid var(--gold-primary);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-elevated);
   }
 }
 

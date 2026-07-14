@@ -20,6 +20,8 @@ import styles from "./Assessment.module.css";
 
 export const UNLOCK_KEY = "msi_builder_unlock";
 export const NUMBER_KEY = "msi_builder_number";
+export const EMAIL_KEY = "msi_builder_email";
+export const NAME_KEY = "msi_builder_name";
 
 type Stage = "intro" | "questions" | "evaluating" | "gate" | "reveal" | "welcome";
 
@@ -163,6 +165,9 @@ export default function Assessment({
     try {
       localStorage.setItem(UNLOCK_KEY, String(report.readiness));
       localStorage.setItem(NUMBER_KEY, number);
+      // The Exchange prefills from these — the Builder never retypes.
+      localStorage.setItem(EMAIL_KEY, cleanEmail);
+      localStorage.setItem(NAME_KEY, cleanName);
     } catch {
       /* private mode */
     }
@@ -379,7 +384,7 @@ export default function Assessment({
                   Builder Invitation Code&nbsp;
                   <span className={styles.code}>{COUPON_CODE}</span>
                 </p>
-                {/* Phase Two: this becomes the Stripe Checkout entrance */}
+                {/* The vault opens, then carries the Builder into the Exchange */}
                 <button className="btnPrimary" onClick={() => setStage("welcome")}>
                   Enter the Institute
                 </button>
@@ -391,7 +396,11 @@ export default function Assessment({
 
       <AnimatePresence>
         {stage === "welcome" && (
-          <VaultWelcome builderNumber={builderNo} onDone={onClose} />
+          <VaultWelcome
+            builderNumber={builderNo}
+            onDone={onClose}
+            href={`/checkout?code=${COUPON_CODE}`}
+          />
         )}
       </AnimatePresence>
     </motion.div>

@@ -1,6 +1,8 @@
-import { NextResponse } from "next/server";
+import { NextResponse, after } from "next/server";
 import { appendFile, mkdir } from "fs/promises";
 import path from "path";
+import { enrollLead } from "@/lib/emails/enroll";
+import { supabaseAdmin, supabaseConfigured } from "@/lib/supabase";
 
 /**
  * Builder Assessment lead capture.
@@ -8,16 +10,13 @@ import path from "path";
  * Stores: name, email, Builder Readiness™, Builder Archetype™,
  * Primary Obstacle™, Builder Number™, raw answers, timestamp.
  *
- * Current storage: local NDJSON at .data/leads.ndjson (dev-safe fallback).
+ * Email (Resend, via after() so the reveal is never delayed):
+ *  - The Builder Report email with coupon BUILDER97, from vault@, now.
+ *  - The 12 Builder Letters scheduled every other day (days 1–23);
+ *    the Stripe webhook cancels the unsent ones on purchase.
  *
- * PENDING INTEGRATIONS (need credentials/provider choice):
- *  - Supabase `leads` table insert (replaces the NDJSON append verbatim).
- *  - Transactional email: send coupon BUILDER97 immediately on capture.
- *  - Nurture: enroll in the 12-email sequence (every other day) until
- *    purchase; on purchase webhook, remove from nurture and enroll in
- *    Builder onboarding. This belongs in the email platform's automation,
- *    triggered from here (add-to-list) and from the Stripe webhook
- *    (move-to-list).
+ * Storage: Supabase `leads` table (production), with the local NDJSON
+ * append at .data/leads.ndjson kept as a dev-safe fallback.
  */
 export async function POST(req: Request) {
   let body: unknown;
@@ -64,16 +63,40 @@ export async function POST(req: Request) {
   };
 
   let stored = false;
-  try {
-    const dir = path.join(process.cwd(), ".data");
-    await mkdir(dir, { recursive: true });
-    await appendFile(path.join(dir, "leads.ndjson"), JSON.stringify(lead) + "\n", "utf8");
-    stored = true;
-  } catch (err) {
-    // Serverless filesystems are read-only — never fail the visitor for it.
-    console.error("[lead] storage failed:", err);
-    console.log("[lead] capture:", JSON.stringify(lead));
+  if (supabaseConfigured) {
+    try {
+      const { error } = await supabaseAdmin().from("leads").insert({
+        email: lead.email,
+        name: lead.name,
+        score: lead.score,
+        archetype: lead.archetype ?? null,
+        obstacle: lead.obstacle ?? null,
+        builder_number: lead.builderNumber ?? null,
+        answers: lead.answers,
+        coupon: lead.coupon,
+      });
+      if (error) throw error;
+      stored = true;
+    } catch (err) {
+      console.error("[lead] supabase insert failed:", err);
+    }
   }
+  if (!stored) {
+    try {
+      const dir = path.join(process.cwd(), ".data");
+      await mkdir(dir, { recursive: true });
+      await appendFile(path.join(dir, "leads.ndjson"), JSON.stringify(lead) + "\n", "utf8");
+      stored = true;
+    } catch (err) {
+      // Serverless filesystems are read-only — never fail the visitor for it.
+      console.error("[lead] storage failed:", err);
+      console.log("[lead] capture:", JSON.stringify(lead));
+    }
+  }
+
+  // Coupon email + the 12 Builder Letters, after the response is sent —
+  // the reveal ceremony never waits on thirteen Resend calls.
+  after(() => enrollLead(lead));
 
   return NextResponse.json({ ok: true, stored });
 }

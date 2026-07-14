@@ -1,0 +1,410 @@
+/* The Builder Dashboard — spec §7 cards on a 12-column rhythm. */
+
+.head {
+  margin-bottom: var(--space-7);
+}
+
+.headMeta {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-4);
+  flex-wrap: wrap;
+}
+
+.builderNo {
+  font-family: var(--font-mono), monospace;
+  font-size: 13px;
+  color: var(--gold-shadow);
+}
+
+.greeting {
+  font-size: clamp(34px, 4.5vw, 56px);
+  line-height: 1.1;
+  margin: var(--space-3) 0 var(--space-4);
+}
+
+.dateLine {
+  font-size: 14px;
+  font-weight: 300;
+  color: var(--text-muted);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: var(--space-5);
+}
+
+.mission {
+  grid-column: span 8;
+  background: var(--color-onyx);
+  border: 1px solid var(--gold-rich);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-gold);
+  padding: var(--space-6);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.missionMovement {
+  font-family: var(--font-mono), monospace;
+  font-size: 13px;
+  color: var(--gold-shadow);
+  margin-top: var(--space-4);
+}
+
+.missionTitle {
+  font-size: clamp(24px, 2.5vw, 28px);
+  margin: var(--space-2) 0 var(--space-4);
+}
+
+.missionDirective {
+  font-size: 15px;
+  font-weight: 300;
+  line-height: 1.7;
+  color: var(--text-primary);
+  max-width: var(--body-max);
+}
+
+.missionMeta {
+  font-family: var(--font-body), sans-serif;
+  font-size: 12px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin: var(--space-4) 0 var(--space-5);
+}
+
+.sauce {
+  grid-column: span 4;
+  background:
+    radial-gradient(ellipse 100% 80% at 50% 0%, rgba(218, 165, 32, 0.08), transparent 75%),
+    var(--gold-dark);
+  border: 1px solid rgba(218, 165, 32, 0.25);
+  border-radius: var(--radius-lg);
+  padding: var(--space-6) var(--space-5);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.sauceLine {
+  font-family: var(--font-display), serif;
+  font-style: italic;
+  font-size: 21px;
+  line-height: 1.45;
+  color: var(--gold-glow);
+  margin-top: var(--space-4);
+  animation: sauceReveal var(--duration-cinematic) var(--ease-heavy) both;
+}
+
+@keyframes sauceReveal {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.currentModule {
+  grid-column: span 4;
+  background: var(--color-onyx);
+  border: 1px solid var(--gold-primary);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  box-shadow: var(--shadow-gold);
+  animation: chamberGlow 5s var(--ease-subtle) infinite;
+  display: flex;
+  flex-direction: column;
+}
+
+@keyframes chamberGlow {
+  0%,
+  100% {
+    box-shadow: var(--shadow-gold);
+  }
+  50% {
+    box-shadow: var(--shadow-gold-strong);
+  }
+}
+
+.moduleCover {
+  /* Same treatment as the rail: portrait covers (1024×1536) shown in
+     full — the title masthead at the top must never crop. */
+  aspect-ratio: 2/3;
+  overflow: hidden;
+  background: var(--color-graphite);
+}
+
+.moduleCover img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  transition: transform var(--duration-slow) var(--ease-heavy);
+}
+
+.currentModule:hover .moduleCover img {
+  transform: scale(1.05);
+}
+
+.moduleBody {
+  padding: var(--space-5);
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.moduleTitle {
+  font-size: 22px;
+  margin: var(--space-2) 0 var(--space-1);
+}
+
+.moduleSubtitle {
+  font-size: 13px;
+  font-weight: 300;
+  color: var(--text-muted);
+  margin-bottom: var(--space-4);
+}
+
+.rings {
+  display: flex;
+  gap: var(--space-3);
+  margin-bottom: var(--space-5);
+}
+
+.continue {
+  margin-top: auto;
+  align-self: flex-start;
+}
+
+.statsCol {
+  grid-column: span 4;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+}
+
+.progressCol {
+  grid-column: span 4;
+}
+
+.rail {
+  grid-column: span 12;
+}
+
+.railLabel {
+  font-family: var(--font-body), sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: var(--space-4);
+}
+
+.railGrid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: var(--space-4);
+}
+
+.railCard {
+  position: relative;
+  display: block;
+  background: var(--color-onyx);
+  border: 1px solid var(--color-steel);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  transition: all 0.5s var(--ease-heavy);
+}
+
+.railCard:hover {
+  border-color: var(--gold-rich);
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-elevated), var(--shadow-gold);
+}
+
+.railCardCurrent {
+  border-color: var(--gold-primary);
+  box-shadow: var(--shadow-gold);
+}
+
+.railCardLocked {
+  opacity: 0.45;
+  pointer-events: none;
+}
+
+.railImage {
+  /* Covers are portrait (1024×1536) — match their ratio and never crop:
+     the module title at the top of each artwork must stay visible. */
+  aspect-ratio: 2/3;
+  overflow: hidden;
+  background: var(--color-graphite);
+}
+
+.railImage img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.railMeta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-3);
+}
+
+.railNo {
+  font-family: var(--font-mono), monospace;
+  font-size: 12px;
+  color: var(--gold-shadow);
+}
+
+.railState {
+  display: inline-flex;
+  align-items: center;
+}
+
+.audioCard {
+  grid-column: span 8;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.executable {
+  grid-column: span 4;
+}
+
+.wins {
+  grid-column: span 8;
+  background: var(--color-onyx);
+  border: 1px solid var(--color-steel);
+  border-radius: var(--radius-lg);
+  padding: var(--space-5);
+}
+
+.winsList {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+}
+
+.winRow {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-3);
+  padding: var(--space-3) 0;
+  border-bottom: 1px solid var(--color-steel);
+  font-size: 14px;
+  font-weight: 300;
+  color: var(--text-primary);
+}
+
+.winRow:last-child {
+  border-bottom: none;
+}
+
+.winDot {
+  width: 8px;
+  height: 8px;
+  border-radius: var(--radius-full);
+  background: var(--gold-primary);
+  flex-shrink: 0;
+  transform: translateY(-1px);
+}
+
+.winTime {
+  margin-left: auto;
+  font-family: var(--font-mono), monospace;
+  font-size: 11px;
+  color: var(--text-subtle);
+  white-space: nowrap;
+}
+
+.winsEmpty {
+  font-size: 14px;
+  font-weight: 300;
+  color: var(--text-muted);
+  line-height: 1.7;
+}
+
+.community {
+  grid-column: span 4;
+  background: var(--color-onyx);
+  border: 1px solid var(--color-steel);
+  border-radius: var(--radius-lg);
+  padding: var(--space-5);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  transition: all 0.5s var(--ease-heavy);
+}
+
+.community:hover {
+  border-color: var(--gold-rich);
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-elevated), var(--shadow-gold);
+}
+
+.communityTitle {
+  font-size: 22px;
+  margin: var(--space-2) 0 var(--space-3);
+}
+
+.communityCopy {
+  font-size: 14px;
+  font-weight: 300;
+  line-height: 1.7;
+  color: var(--text-muted);
+  margin-bottom: var(--space-5);
+}
+
+.cardLabel {
+  font-family: var(--font-body), sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+/* Responsive collapse — tablet 2-col rhythm, mobile single column. */
+@media (max-width: 1023px) {
+  .mission,
+  .audioCard,
+  .wins {
+    grid-column: span 12;
+  }
+  .sauce,
+  .currentModule,
+  .progressCol,
+  .statsCol,
+  .executable,
+  .community {
+    grid-column: span 6;
+  }
+  .railGrid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 639px) {
+  .sauce,
+  .currentModule,
+  .progressCol,
+  .statsCol,
+  .executable,
+  .community {
+    grid-column: span 12;
+  }
+  .railGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}

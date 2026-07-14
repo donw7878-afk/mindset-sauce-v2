@@ -1,0 +1,40 @@
+/* Shared portal shell + page scaffolding. */
+
+.shell {
+  min-height: 100vh;
+  padding: calc(var(--nav-height) + var(--space-7)) var(--space-5) 160px;
+  background:
+    radial-gradient(ellipse 70% 30% at 50% 0%, rgba(218, 165, 32, 0.05), transparent 70%),
+    var(--color-void);
+}
+
+.page {
+  max-width: var(--content-max);
+  margin: 0 auto;
+}
+
+.pageHead {
+  margin-bottom: var(--space-7);
+}
+
+.pageTitle {
+  font-size: clamp(32px, 4.5vw, 56px);
+  line-height: 1.1;
+  margin: var(--space-3) 0 var(--space-4);
+}
+
+.lede {
+  max-width: var(--body-max);
+  font-size: 15px;
+  font-weight: 300;
+  line-height: 1.7;
+  color: var(--text-muted);
+}
+
+@media (max-width: 639px) {
+  .shell {
+    padding-left: var(--space-4);
+    padding-right: var(--space-4);
+    padding-top: calc(var(--nav-height) + var(--space-6));
+  }
+}

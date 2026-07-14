@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
@@ -17,6 +17,11 @@ gsap.registerPlugin(useGSAP, ScrollTrigger);
  */
 export default function Chambers() {
   const root = useRef<HTMLElement>(null);
+  // Touch screens have no hover: tapping a chapter opens its plaque
+  // inline instead (desktop keeps the floating museum plaque).
+  const [openPlaque, setOpenPlaque] = useState<string | null>(null);
+  const togglePlaque = (key: string) =>
+    setOpenPlaque((cur) => (cur === key ? null : key));
 
   useGSAP(
     () => {
@@ -128,18 +133,46 @@ export default function Chambers() {
                 <p className={styles.subtitle}>{m.subtitle}</p>
                 <p className={styles.line}>{m.line}</p>
                 <ul className={styles.chapters}>
-                  {CHAPTERS.map((c, ci) => (
-                    <li key={c} className={styles.chapterItem} tabIndex={0}>
-                      <span className={styles.chapterLabel}>{c}</span>
-                      {/* Museum plaque — read beside the artifact, never over it */}
-                      <div className={styles.plaquePanel} role="tooltip">
-                        <span className={styles.plaqueAccent} aria-hidden />
-                        <h4 className={styles.plaqueTitle}>{m.chapters[ci].title}</h4>
-                        <p className={styles.plaqueDesc}>{m.chapters[ci].desc}</p>
-                        <p className={styles.plaqueMeta}>{m.chapters[ci].meta}</p>
-                      </div>
-                    </li>
-                  ))}
+                  {CHAPTERS.map((c, ci) => {
+                    const key = `${m.n}-${ci}`;
+                    const open = openPlaque === key;
+                    return (
+                      <li
+                        key={c}
+                        className={`${styles.chapterItem} ${open ? styles.chapterOpen : ""}`}
+                        tabIndex={0}
+                        role="button"
+                        aria-expanded={open}
+                        onClick={() => togglePlaque(key)}
+                        onKeyDown={(e) => {
+                          if (e.key === "Enter" || e.key === " ") {
+                            e.preventDefault();
+                            togglePlaque(key);
+                          }
+                        }}
+                      >
+                        <span className={styles.chapterLabel}>{c}</span>
+                        {/* Museum plaque — read beside the artifact, never over it */}
+                        <div className={styles.plaquePanel} role="tooltip">
+                          <span className={styles.plaqueAccent} aria-hidden />
+                          <h4 className={styles.plaqueTitle}>{m.chapters[ci].title}</h4>
+                          <p className={styles.plaqueDesc}>{m.chapters[ci].desc}</p>
+                          <p className={styles.plaqueMeta}>{m.chapters[ci].meta}</p>
+                        </div>
+                        {/* Touch: the same plaque, unfolding beneath the tap */}
+                        <div className={styles.plaqueInline} aria-hidden={!open}>
+                          <div className={styles.plaqueInlineClip}>
+                            <div className={styles.plaqueInlineBody}>
+                              <span className={styles.plaqueAccent} aria-hidden />
+                              <h4 className={styles.plaqueTitle}>{m.chapters[ci].title}</h4>
+                              <p className={styles.plaqueDesc}>{m.chapters[ci].desc}</p>
+                              <p className={styles.plaqueMeta}>{m.chapters[ci].meta}</p>
+                            </div>
+                          </div>
+                        </div>
+                      </li>
+                    );
+                  })}
                 </ul>
               </div>
             </article>

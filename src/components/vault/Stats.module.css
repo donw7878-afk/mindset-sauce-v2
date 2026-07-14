@@ -1,0 +1,100 @@
+/* Builder Score + Streak — spec §7 Builder Card, §10 indicators. */
+
+.card {
+  background: var(--color-onyx);
+  border: 1px solid var(--color-steel);
+  border-radius: var(--radius-lg);
+  padding: var(--space-5);
+}
+
+.label {
+  font-family: var(--font-body), sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: var(--space-3);
+}
+
+.scoreValue {
+  font-family: var(--font-mono), monospace;
+  font-size: 48px;
+  font-weight: 500;
+  line-height: 1;
+  color: var(--gold-primary);
+}
+
+.streakValue {
+  font-family: var(--font-mono), monospace;
+  font-size: 32px;
+  font-weight: 500;
+  line-height: 1;
+  color: var(--gold-primary);
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-2);
+}
+
+.streakUnit {
+  font-family: var(--font-body), sans-serif;
+  font-size: 13px;
+  font-weight: 300;
+  color: var(--text-muted);
+  letter-spacing: 1px;
+}
+
+.flame {
+  align-self: center;
+  animation: flicker 2.4s var(--ease-subtle) infinite;
+  transform-origin: 50% 90%;
+}
+
+@keyframes flicker {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  40% {
+    transform: scale(1.05) rotate(-1deg);
+    opacity: 0.92;
+  }
+  70% {
+    transform: scale(0.97) rotate(1deg);
+    opacity: 1;
+  }
+}
+
+.hint {
+  margin-top: var(--space-3);
+  font-size: 12px;
+  font-weight: 300;
+  line-height: 1.6;
+  color: var(--text-muted);
+}
+
+.pulse {
+  animation: goldPulse 1.2s var(--ease-heavy);
+}
+
+@keyframes goldPulse {
+  0% {
+    box-shadow: none;
+    border-color: var(--color-steel);
+  }
+  30% {
+    box-shadow: var(--shadow-gold);
+    border-color: var(--gold-rich);
+  }
+  100% {
+    box-shadow: none;
+    border-color: var(--color-steel);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .flame {
+    animation: none;
+  }
+}

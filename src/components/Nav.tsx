@@ -91,6 +91,13 @@ export default function Nav() {
           >
             {sound ? "Sound On" : "Sound Off"}
           </button>
+          <a
+            href="/login"
+            className={styles.login}
+            aria-label="Builder Login — returning Builders enter here"
+          >
+            Builder Login
+          </a>
           <a href="#exchange" className={`btnPrimary ${styles.cta}`}>
             Enter the Institute
           </a>

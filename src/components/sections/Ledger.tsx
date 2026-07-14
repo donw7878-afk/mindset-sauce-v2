@@ -168,7 +168,7 @@ export default function Ledger() {
                   Builder Invitation Code&nbsp;
                   <span className={styles.code}>{COUPON_CODE}</span>
                 </p>
-                {/* Phase Two: this becomes the Stripe Checkout entrance */}
+                {/* The vault opens, then carries the Builder into the Exchange */}
                 <button
                   className={`btnPrimary ${styles.cta}`}
                   onClick={() => setWelcoming(true)}
@@ -236,6 +236,7 @@ export default function Ledger() {
           <VaultWelcome
             builderNumber={builderNo || "—"}
             onDone={() => setWelcoming(false)}
+            href={`/checkout?code=${COUPON_CODE}`}
           />
         )}
       </AnimatePresence>

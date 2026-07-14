@@ -253,6 +253,17 @@ section {
   position: relative;
 }
 
+/* Printing (the Certificate): chrome stays on screen, not on paper. */
+@media print {
+  header,
+  nav {
+    display: none !important;
+  }
+  body {
+    background: #ffffff;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,

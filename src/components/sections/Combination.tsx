@@ -40,7 +40,7 @@ export default function Combination() {
         scrollTrigger: {
           trigger: root.current,
           start: "top top",
-          end: isMobile ? "+=180%" : "+=240%",
+          end: isMobile ? "+=200%" : "+=300%",
           scrub: 1.5,
           pin: `.${styles.stage}`,
           anticipatePin: 1,
@@ -103,25 +103,57 @@ export default function Combination() {
         0.62
       );
 
-      // Phase C (0.72 → 1): the combination dissolves into light.
+      // Phase C (0.72 → 0.92): the combination dissolves into light.
       tl.to(
         `.${styles.flash}`,
-        { autoAlpha: 0.85, duration: 0.12, ease: "power1.in" },
-        0.74
+        { autoAlpha: 0.85, duration: 0.1, ease: "power1.in" },
+        0.72
       );
       tl.to(
         cards,
-        { autoAlpha: 0, scale: 1.18, duration: 0.14, ease: "power1.in", stagger: 0.008 },
-        0.76
+        { autoAlpha: 0, scale: 1.18, duration: 0.12, ease: "power1.in", stagger: 0.008 },
+        0.74
       );
-      tl.to(`.${styles.ring}`, { autoAlpha: 0, scale: 1.3, duration: 0.12 }, 0.76);
-      tl.to(`.${styles.coreGlow}`, { autoAlpha: 0, scale: 2.2, duration: 0.16 }, 0.78);
-      tl.to(`.${styles.flash}`, { autoAlpha: 0, duration: 0.1 }, 0.9);
+      tl.to(`.${styles.ring}`, { autoAlpha: 0, scale: 1.3, duration: 0.1 }, 0.74);
+      tl.to(`.${styles.coreGlow}`, { autoAlpha: 0, scale: 2.2, duration: 0.12 }, 0.76);
+      tl.to(`.${styles.flash}`, { autoAlpha: 0, duration: 0.1 }, 0.82);
+
+      // The coda arrives once the light has cleared, then HOLDS — no
+      // further tweens touch it inside the pin, so the last ~10% of the
+      // scrub is pure dwell and near-end scroll jitter can't flicker it.
       tl.fromTo(
         `.${styles.coda}`,
         { autoAlpha: 0, y: 24 },
-        { autoAlpha: 1, y: 0, duration: 0.1, ease: "power2.out" },
-        0.9
+        { autoAlpha: 1, y: 0, duration: 0.08, ease: "power2.out" },
+        0.86
+      );
+      tl.to({}, { duration: 0.06 }, 0.94); // explicit dwell to the unpin
+
+      // After the pin releases, the line rides with the page and fades
+      // only as the vault door takes over the viewport. The offsets are
+      // spelled out from the pin distance because "bottom"-relative
+      // positions on this section are measured with the pin spacer
+      // collapsed — which would land the fade inside the pin itself.
+      const pinDistance = () =>
+        window.innerHeight * (window.innerWidth < 640 ? 2.0 : 3.0);
+      // fromTo with immediateRender:false — a plain to() would capture
+      // its start values at load, while the coda is still hidden, and
+      // snap it to zero the moment the fade range begins.
+      gsap.fromTo(
+        `.${styles.coda}`,
+        { autoAlpha: 1, y: 0 },
+        {
+          autoAlpha: 0,
+          y: -24,
+          ease: "none",
+          immediateRender: false,
+          scrollTrigger: {
+            trigger: root.current,
+            start: () => `top+=${pinDistance() + window.innerHeight * 0.2} top`,
+            end: () => `+=${window.innerHeight * 0.65}`,
+            scrub: true,
+          },
+        }
       );
     },
     { scope: root }

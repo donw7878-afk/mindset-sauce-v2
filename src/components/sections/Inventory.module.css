@@ -1,13 +1,22 @@
-/* Warm shift: the only section where the void warms toward gold-dark */
+/* Warm shift: the only section where the void warms toward gold-dark.
+   The top is warm from the first pixel, with a gold bloom carrying the
+   vault interior's light straight into the treasury — no black seam
+   between the open vault and this room. */
 .inventory {
-  background: linear-gradient(
-    180deg,
-    var(--color-void) 0%,
-    var(--gold-dark) 18%,
-    var(--gold-dark) 82%,
-    var(--color-void) 100%
-  );
-  padding: var(--space-11) 0;
+  background:
+    radial-gradient(
+      ellipse 75% 34% at 50% 0%,
+      rgba(218, 165, 32, 0.14),
+      rgba(218, 165, 32, 0.05) 45%,
+      transparent 72%
+    ),
+    linear-gradient(
+      180deg,
+      var(--gold-dark) 0%,
+      var(--gold-dark) 82%,
+      var(--color-void) 100%
+    );
+  padding: var(--space-9) 0 var(--space-11);
 }
 
 .head {

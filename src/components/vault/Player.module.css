@@ -1,0 +1,257 @@
+/* Audio player + dock — spec §9. */
+
+.player {
+  background: var(--color-onyx);
+  border: 1px solid var(--color-steel);
+  border-radius: var(--radius-md);
+  padding: var(--space-4) var(--space-5);
+}
+
+.trackHead {
+  margin-bottom: var(--space-4);
+}
+
+.trackTitle {
+  font-family: var(--font-display), serif;
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--text-heading);
+}
+
+.trackSub {
+  font-family: var(--font-body), sans-serif;
+  font-size: 12px;
+  font-weight: 300;
+  color: var(--text-muted);
+  margin-top: 2px;
+}
+
+.progressTrack {
+  position: relative;
+  height: 4px;
+  background: var(--color-steel);
+  border-radius: 2px;
+  cursor: pointer;
+  margin: var(--space-4) 0 var(--space-3);
+}
+
+.progressFill {
+  position: relative;
+  height: 100%;
+  background: var(--gold-gradient);
+  border-radius: 2px;
+  transition: width 0.2s linear;
+}
+
+.scrubber {
+  position: absolute;
+  right: -6px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 12px;
+  height: 12px;
+  border-radius: var(--radius-full);
+  background: var(--gold-primary);
+  transition: box-shadow var(--duration-fast) var(--ease-subtle);
+}
+
+.progressTrack:hover .scrubber {
+  box-shadow: var(--shadow-gold);
+}
+
+.controls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+}
+
+.transport {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+}
+
+.playBtn {
+  width: 48px;
+  height: 48px;
+  border-radius: var(--radius-full);
+  border: 1px solid var(--gold-rich);
+  color: var(--gold-primary);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  transition: all var(--duration-base) var(--ease-heavy);
+}
+
+.playBtn:hover {
+  border-color: var(--gold-primary);
+  box-shadow: var(--shadow-gold);
+  transform: translateY(-1px);
+}
+
+.playBtnSmall {
+  width: 36px;
+  height: 36px;
+}
+
+.skipBtn {
+  width: 32px;
+  height: 32px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-muted);
+  font-family: var(--font-mono), monospace;
+  font-size: 11px;
+  transition: color var(--duration-fast) var(--ease-subtle);
+}
+
+.skipBtn:hover {
+  color: var(--text-gold);
+}
+
+.time {
+  font-family: var(--font-mono), monospace;
+  font-size: 12px;
+  color: var(--text-muted);
+  min-width: 40px;
+}
+
+.volumeRow {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin-top: var(--space-3);
+  justify-content: flex-end;
+}
+
+.volumeLabel {
+  font-family: var(--font-body), sans-serif;
+  font-size: 10px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--text-subtle);
+}
+
+.volume {
+  width: 80px;
+  height: 4px;
+  appearance: none;
+  background: var(--color-steel);
+  border-radius: 2px;
+  outline: none;
+}
+
+.volume::-webkit-slider-thumb {
+  appearance: none;
+  width: 10px;
+  height: 10px;
+  border-radius: var(--radius-full);
+  background: var(--gold-primary);
+  cursor: pointer;
+}
+
+.volume::-moz-range-thumb {
+  width: 10px;
+  height: 10px;
+  border: none;
+  border-radius: var(--radius-full);
+  background: var(--gold-primary);
+  cursor: pointer;
+}
+
+/* ============ The dock — persistent mini-player ============ */
+
+.dock {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 900;
+  background: rgba(18, 18, 18, 0.85);
+  backdrop-filter: blur(20px);
+  border-top: 1px solid rgba(218, 165, 32, 0.1);
+  animation: dockRise var(--duration-slow) var(--ease-heavy);
+}
+
+@keyframes dockRise {
+  from {
+    transform: translateY(100%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+.dockProgress {
+  height: 2px;
+  background: var(--color-steel);
+}
+
+.dockProgressFill {
+  height: 100%;
+  background: var(--gold-gradient);
+  transition: width 0.2s linear;
+}
+
+.dockInner {
+  max-width: var(--content-max);
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  gap: var(--space-5);
+  padding: var(--space-3) var(--space-5);
+}
+
+.dockMeta {
+  flex: 1;
+  min-width: 0;
+}
+
+.dockTitle {
+  font-family: var(--font-display), serif;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text-heading);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.dockSub {
+  font-size: 11px;
+  font-weight: 300;
+  color: var(--text-muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.dockControls {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.dockTime {
+  min-width: 96px;
+  text-align: right;
+}
+
+@media print {
+  .dock {
+    display: none;
+  }
+}
+
+@media (max-width: 639px) {
+  .dockInner {
+    padding: var(--space-2) var(--space-4);
+    gap: var(--space-3);
+  }
+  .dockTime {
+    display: none;
+  }
+}

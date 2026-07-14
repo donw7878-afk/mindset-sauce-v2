@@ -39,7 +39,7 @@ export default function Unlocking() {
         gsap.set(`.${styles.interior}`, { autoAlpha: 1, scale: 1.15 });
         gsap.set(`.${styles.flood}`, { autoAlpha: 0.5 });
         gsap.set(`.${styles.atmosphere}`, { autoAlpha: 1 });
-        gsap.set(`.${styles.insideCopy}`, { autoAlpha: 1 });
+        gsap.set(`.${styles.insideCopy} > *`, { autoAlpha: 1 });
         return;
       }
 
@@ -54,7 +54,9 @@ export default function Unlocking() {
         scrollTrigger: {
           trigger: root.current,
           start: "top top",
-          end: isDesktop ? "+=500%" : "+=250%",
+          // Mobile gets a generous range too — the interior hold (Phase
+          // D dwell) needs real scroll distance to feel like lingering.
+          end: isDesktop ? "+=560%" : "+=340%",
           scrub: 2,
           pin: `.${styles.stage}`,
           anticipatePin: 1,
@@ -126,16 +128,35 @@ export default function Unlocking() {
       tl.to(`.${styles.interior}`, { autoAlpha: 1, duration: 0.2 }, 0.54);
       tl.to(`.${styles.atmosphere}`, { autoAlpha: 1, duration: 0.25 }, 0.6);
 
-      // ---- Phase D (0.85 → 1): dolly through the opening, into stillness
-      tl.to(`.${styles.interior}`, { scale: 1.45, duration: 0.15, ease: "power1.in" }, 0.85);
-      tl.to(`.${styles.door}`, { autoAlpha: 0, duration: 0.06 }, 0.87);
-      tl.to(`.${styles.flood}`, { autoAlpha: 0.3, duration: 0.13 }, 0.87);
-      tl.fromTo(
-        `.${styles.insideCopy}`,
-        { autoAlpha: 0, y: 40 },
-        { autoAlpha: 1, y: 0, duration: 0.1, ease: "power2.out" },
-        0.9
+      // ---- Phase D (0.78 → 0.92): one continuous dolly through the
+      // opening — the zoom begins while the door is still clearing so
+      // there is never a stationary cut, and every move completes well
+      // before the unpin.
+      tl.to(
+        `.${styles.interior}`,
+        { scale: 1.45, duration: 0.14, ease: "power1.inOut" },
+        0.78
       );
+      tl.to(`.${styles.door}`, { autoAlpha: 0, duration: 0.06 }, 0.82);
+      tl.to(`.${styles.flood}`, { autoAlpha: 0.3, duration: 0.1 }, 0.82);
+
+      // The copy lands in two beats: "You did that" first, alone…
+      tl.fromTo(
+        `.${styles.didThat}`,
+        { autoAlpha: 0, y: 30 },
+        { autoAlpha: 1, y: 0, duration: 0.05, ease: "power2.out" },
+        0.87
+      );
+      // …then the declaration beneath it.
+      tl.fromTo(
+        `.${styles.insideCopy} h2`,
+        { autoAlpha: 0, y: 40 },
+        { autoAlpha: 1, y: 0, duration: 0.05, ease: "power2.out" },
+        0.93
+      );
+      // 0.98 → 1: held stillness inside the open vault before the page
+      // is allowed to move on.
+      tl.to({}, { duration: 0.02 }, 0.98);
     },
     { scope: root }
   );
@@ -187,7 +208,7 @@ export default function Unlocking() {
         <Particles density={1.4} />
 
         <div className={styles.insideCopy}>
-          <p className="overline">You did that</p>
+          <p className={`overline ${styles.didThat}`}>You did that</p>
           <h2>
             The vault is <span className="goldWord">open</span>.
           </h2>

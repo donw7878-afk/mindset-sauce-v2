@@ -1,0 +1,5 @@
+# Source media lives in Supabase Storage in production (scripts/upload-media.mjs).
+# The local-streaming fallback is dev-only, so none of this ships to Vercel.
+assets
+.data
+docs

@@ -8,25 +8,31 @@ import styles from "./VaultWelcome.module.css";
 /**
  * The final emotional moment. Fade to black:
  * "Welcome, / Builder #004826 / The vault has opened."
- * In Phase Two this transitions into checkout; for now it holds,
- * then hands the visitor back to the unlocked Exchange.
+ * Phase Two: when `href` is given, the ceremony holds, then carries the
+ * Builder into the Exchange (Stripe checkout); otherwise it hands the
+ * visitor back via onDone.
  */
 export default function VaultWelcome({
   builderNumber,
   onDone,
+  href,
 }: {
   builderNumber: string;
   onDone: () => void;
+  href?: string;
 }) {
   useEffect(() => {
     deepRelease(0.35);
     const tone = setTimeout(() => goldTone(0.08), 1200);
-    const done = setTimeout(onDone, 6000);
+    const done = setTimeout(() => {
+      if (href) window.location.assign(href);
+      else onDone();
+    }, 6000);
     return () => {
       clearTimeout(tone);
       clearTimeout(done);
     };
-  }, [onDone]);
+  }, [onDone, href]);
 
   return (
     <motion.div
@@ -61,6 +67,16 @@ export default function VaultWelcome({
       >
         The vault has opened.
       </motion.p>
+      {href && (
+        <motion.p
+          className={styles.line}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 0.7 }}
+          transition={{ delay: 4.6, duration: 1.2 }}
+        >
+          Preparing your Exchange&hellip;
+        </motion.p>
+      )}
       <motion.span
         className={styles.glow}
         aria-hidden

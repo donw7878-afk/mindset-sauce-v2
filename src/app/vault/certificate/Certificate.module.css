@@ -1,0 +1,190 @@
+/* The Certificate — engraved, printable, earned. */
+
+.actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  max-width: 900px;
+  margin: 0 auto var(--space-6);
+}
+
+.certificate {
+  max-width: 900px;
+  margin: 0 auto;
+  background: var(--color-onyx);
+  border: 1px solid var(--gold-rich);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-floating), var(--shadow-gold);
+  padding: var(--space-4);
+}
+
+.frame {
+  border: 1px solid var(--gold-shadow);
+  border-radius: var(--radius-md);
+  padding: var(--space-9) var(--space-8);
+  text-align: center;
+  background:
+    radial-gradient(ellipse 80% 50% at 50% 0%, rgba(218, 165, 32, 0.06), transparent 70%),
+    var(--color-onyx);
+}
+
+.institute {
+  font-family: var(--font-display), serif;
+  font-size: 24px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  color: var(--text-heading);
+}
+
+.rule {
+  width: 56px;
+  height: 1px;
+  background: var(--gold-primary);
+  margin: var(--space-4) auto;
+}
+
+.docType {
+  font-family: var(--font-body), sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: var(--text-gold);
+  margin-bottom: var(--space-7);
+}
+
+.certifies {
+  font-size: 14px;
+  font-weight: 300;
+  color: var(--text-muted);
+  margin-bottom: var(--space-4);
+}
+
+.name {
+  font-family: var(--font-display), serif;
+  font-size: clamp(40px, 6vw, 64px);
+  font-weight: 600;
+  line-height: 1.1;
+  color: var(--gold-primary);
+  text-shadow: 0 0 40px rgba(218, 165, 32, 0.25);
+}
+
+.number {
+  font-family: var(--font-mono), monospace;
+  font-size: 15px;
+  color: var(--gold-shadow);
+  margin: var(--space-3) 0 var(--space-6);
+}
+
+.body {
+  max-width: 560px;
+  margin: 0 auto var(--space-6);
+  font-size: 15px;
+  font-weight: 300;
+  line-height: 1.8;
+  color: var(--text-primary);
+}
+
+.motto {
+  font-family: var(--font-display), serif;
+  font-style: italic;
+  font-size: 19px;
+  color: var(--gold-glow);
+  margin-bottom: var(--space-8);
+}
+
+.footer {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: var(--space-6);
+}
+
+.signBlock {
+  flex: 1;
+  max-width: 220px;
+}
+
+.signName {
+  font-family: var(--font-display), serif;
+  font-style: italic;
+  font-size: 22px;
+  color: var(--text-heading);
+  margin-bottom: var(--space-2);
+}
+
+.signRule {
+  height: 1px;
+  background: var(--color-steel);
+  margin-bottom: var(--space-2);
+}
+
+.signTitle {
+  font-size: 11px;
+  font-weight: 300;
+  letter-spacing: 0.5px;
+  color: var(--text-muted);
+}
+
+.sealMark {
+  width: 88px;
+  height: 88px;
+  border: 1px solid var(--gold-primary);
+  border-radius: var(--radius-full);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: var(--shadow-gold), inset 0 0 24px rgba(218, 165, 32, 0.12);
+  flex-shrink: 0;
+}
+
+.sealInner {
+  font-family: var(--font-mono), monospace;
+  font-size: 14px;
+  color: var(--gold-primary);
+}
+
+/* Locked state */
+
+.lockedWrap {
+  max-width: 560px;
+  margin: 0 auto;
+  text-align: center;
+  padding-top: var(--space-8);
+}
+
+.lockedTitle {
+  font-size: clamp(30px, 4vw, 44px);
+  margin: var(--space-4) 0 var(--space-5);
+}
+
+.lockedCopy {
+  font-size: 15px;
+  font-weight: 300;
+  line-height: 1.7;
+  color: var(--text-muted);
+  margin-bottom: var(--space-6);
+}
+
+/* Print: the certificate alone, on its own page. */
+@media print {
+  .actions {
+    display: none;
+  }
+  .certificate {
+    box-shadow: none;
+    border-radius: 0;
+  }
+}
+
+@media (max-width: 639px) {
+  .frame {
+    padding: var(--space-7) var(--space-5);
+  }
+  .footer {
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-5);
+  }
+}

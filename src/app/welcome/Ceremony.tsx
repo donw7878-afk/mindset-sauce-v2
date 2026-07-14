@@ -16,9 +16,16 @@ gsap.registerPlugin(useGSAP);
  * The unlock sound is synthesized with the Web Audio API per spec §15 —
  * mechanical and metallic, no music, nothing until the visitor acts.
  */
-export default function Ceremony() {
+export default function Ceremony({
+  builderName,
+  builderNumber,
+}: {
+  builderName?: string;
+  builderNumber?: string;
+} = {}) {
   const root = useRef<HTMLDivElement>(null);
   const [begun, setBegun] = useState(false);
+  const firstName = builderName?.trim().split(/\s+/)[0];
 
   const playUnlockSound = () => {
     try {
@@ -77,49 +84,75 @@ export default function Ceremony() {
 
   const begin = () => {
     if (begun) return;
-    setBegun(true);
+    // Sound must start inside the user gesture; the animation itself
+    // waits for React to render the stage (see useGSAP below).
     playUnlockSound();
-
-    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    const tl = gsap.timeline({ defaults: { ease: "power2.out" } });
-
-    if (reduced) {
-      tl.set(`.${styles.gate}`, { autoAlpha: 0 })
-        .set(`.${styles.flood}`, { autoAlpha: 0.5 })
-        .set(`.${styles.access}`, { autoAlpha: 1 })
-        .set(`.${styles.welcome}`, { autoAlpha: 1 })
-        .set(`.${styles.manual}`, { autoAlpha: 1 });
-      return;
-    }
-
-    // Ceremony: 3s vault opening cadence — heavy, mechanical, earned
-    tl.to(`.${styles.gate}`, { autoAlpha: 0, duration: 0.6 });
-    tl.fromTo(
-      `.${styles.flood}`,
-      { autoAlpha: 0, scale: 0.6 },
-      { autoAlpha: 1, scale: 1.4, duration: 2.4, ease: "power1.inOut" },
-      0.4
-    );
-    tl.fromTo(
-      `.${styles.access}`,
-      { autoAlpha: 0, letterSpacing: "18px" },
-      { autoAlpha: 1, letterSpacing: "8px", duration: 1.5, ease: "expo.out" },
-      1.6
-    );
-    tl.to(`.${styles.flood}`, { autoAlpha: 0.35, duration: 1.2 }, 2.8);
-    tl.fromTo(
-      `.${styles.welcome} > *`,
-      { autoAlpha: 0, y: 40 },
-      { autoAlpha: 1, y: 0, duration: 1.5, ease: "expo.out", stagger: 0.15 },
-      3.2
-    );
-    tl.fromTo(
-      `.${styles.manual}`,
-      { autoAlpha: 0, y: 40, scale: 0.95 },
-      { autoAlpha: 1, y: 0, scale: 1, duration: 1.5, ease: "expo.out" },
-      4.0
-    );
+    setBegun(true);
   };
+
+  // The ceremony timeline runs AFTER the stage is in the DOM — building
+  // it inside the click handler binds GSAP to elements React hasn't
+  // rendered yet, which is exactly how the manual card got lost.
+  useGSAP(
+    () => {
+      if (!begun) return;
+
+      const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      const tl = gsap.timeline({ defaults: { ease: "power2.out" } });
+
+      if (reduced) {
+        tl.set(`.${styles.gate}`, { autoAlpha: 0 })
+          .set(`.${styles.flood}`, { autoAlpha: 0.5 })
+          .set(`.${styles.access}`, { autoAlpha: 1 })
+          .set(`.${styles.welcome} > *`, { autoAlpha: 1 })
+          .set(`.${styles.manual}`, { autoAlpha: 1 })
+          .set(`.${styles.dashboardCta}`, { autoAlpha: 1 })
+          .set(`.${styles.inboxNote}`, { autoAlpha: 1 });
+        return;
+      }
+
+      // Ceremony: 3s vault opening cadence — heavy, mechanical, earned
+      tl.to(`.${styles.gate}`, { autoAlpha: 0, duration: 0.6 });
+      tl.fromTo(
+        `.${styles.flood}`,
+        { autoAlpha: 0, scale: 0.6 },
+        { autoAlpha: 1, scale: 1.4, duration: 2.4, ease: "power1.inOut" },
+        0.4
+      );
+      tl.fromTo(
+        `.${styles.access}`,
+        { autoAlpha: 0, letterSpacing: "18px" },
+        { autoAlpha: 1, letterSpacing: "8px", duration: 1.5, ease: "expo.out" },
+        1.6
+      );
+      tl.to(`.${styles.flood}`, { autoAlpha: 0.35, duration: 1.2 }, 2.8);
+      tl.fromTo(
+        `.${styles.welcome} > *`,
+        { autoAlpha: 0, y: 40 },
+        { autoAlpha: 1, y: 0, duration: 1.5, ease: "expo.out", stagger: 0.15 },
+        3.2
+      );
+      tl.fromTo(
+        `.${styles.manual}`,
+        { autoAlpha: 0, y: 40, scale: 0.95 },
+        { autoAlpha: 1, y: 0, scale: 1, duration: 1.5, ease: "expo.out" },
+        4.0
+      );
+      tl.fromTo(
+        `.${styles.dashboardCta}`,
+        { autoAlpha: 0, y: 24 },
+        { autoAlpha: 1, y: 0, duration: 1.2, ease: "expo.out" },
+        4.6
+      );
+      tl.fromTo(
+        `.${styles.inboxNote}`,
+        { autoAlpha: 0 },
+        { autoAlpha: 1, duration: 1.2, ease: "power1.out" },
+        5.0
+      );
+    },
+    { dependencies: [begun], scope: root }
+  );
 
   return (
     <div ref={root} className={styles.ceremony}>
@@ -140,12 +173,17 @@ export default function Ceremony() {
           <p className={styles.access}>Access Granted</p>
           <div className={styles.welcome}>
             <h1>
-              Welcome, <span className={styles.gold}>Builder</span>.
+              Welcome, <span className={styles.gold}>{firstName ?? "Builder"}</span>.
             </h1>
             <p className={styles.sub}>
               What you unlocked today doesn&rsquo;t work because you bought it.
               It works because you will.
             </p>
+            {builderNumber && (
+              <p className={styles.builderLine}>
+                Builder {builderNumber} — recorded in the Institute ledger.
+              </p>
+            )}
           </div>
 
           <a
@@ -160,6 +198,17 @@ export default function Ceremony() {
               Ten minutes. How to run the system — and yourself — for life.
             </span>
           </a>
+
+          <a className={`btnPrimary ${styles.dashboardCta}`} href="/vault">
+            Enter Your Vault
+          </a>
+
+          <p className={styles.inboxNote}>
+            Check your inbox for your Access Granted email from
+            vault@themindsetsauce.com. If you don&rsquo;t see it, check your
+            spam folder and mark it &lsquo;Not Spam&rsquo; &mdash; the vault
+            always delivers.
+          </p>
         </div>
       )}
     </div>

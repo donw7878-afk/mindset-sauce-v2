@@ -1,0 +1,106 @@
+.card {
+  background: var(--color-onyx);
+  border: 1px solid var(--color-steel);
+  border-radius: var(--radius-lg);
+  padding: var(--space-5);
+}
+
+.head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-4);
+  margin-bottom: var(--space-4);
+}
+
+.label {
+  font-family: var(--font-body), sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.count {
+  font-family: var(--font-mono), monospace;
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+.countGold {
+  color: var(--gold-primary);
+  font-size: 16px;
+}
+
+.overallTrack {
+  height: 8px;
+  background: var(--color-steel);
+  border-radius: 4px;
+  overflow: hidden;
+  margin-bottom: var(--space-5);
+}
+
+.overallFill {
+  height: 100%;
+  background: var(--gold-gradient);
+  border-radius: 4px;
+  box-shadow: var(--shadow-gold);
+  transition: width 1s var(--ease-heavy);
+}
+
+.moduleList {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.moduleRow {
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr) auto;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.locked {
+  opacity: 0.45;
+}
+
+.moduleName {
+  font-size: 13px;
+  font-weight: 300;
+  color: var(--text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.moduleNo {
+  font-family: var(--font-mono), monospace;
+  font-size: 11px;
+  color: var(--gold-shadow);
+  margin-right: var(--space-2);
+}
+
+.moduleTrack {
+  display: block;
+  height: 4px;
+  background: var(--color-steel);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.moduleFill {
+  display: block;
+  height: 100%;
+  background: var(--gold-gradient);
+  border-radius: 2px;
+  transition: width 1s var(--ease-heavy);
+}
+
+.moduleCount {
+  font-family: var(--font-mono), monospace;
+  font-size: 11px;
+  color: var(--text-muted);
+}

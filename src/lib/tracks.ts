@@ -75,11 +75,11 @@ const AUDIO_FILES: Record<number, { dir: string; files: [string, string, string,
     ],
   },
   6: {
-    dir: "MODULE 6 - AUDIO ", // trailing space is real
+    dir: "MODULE 6 - AUDIO",
     files: [
       "Mindset - Mod6 Audio - OPENING.mp3",
       "Mindset - Mod6 Audio - THE CORE TEACHING.mp3",
-      "Mindset - Mod6 Audio - THE PRACTICE .mp3",
+      "Mindset - Mod6 Audio - THE PRACTICE.mp3",
       "Mindset - Mod6 Audio - THE CLOSE - FINAL WORD.mp3",
     ],
   },
